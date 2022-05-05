@@ -1,12 +1,18 @@
 <!Doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head th:replace="fragments::head"></head>
-<body>
+<body class="container">
     <h>Create Event</h>
     <nav th:replace="fragments :: navigation"></nav>
     <form method="post" action="create">
-        <input type="text" name="eventName">
-        <input type="submit" value="Create Event">
+        <div class="form-group">
+            <label>Name
+                <input type="text" name="eventName" class="form-control">
+            </label>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Create Event" class="btn btn-success">
+        </div>
     </form>
     <div th:replace="fragments::linkList"></div>
 </body>
