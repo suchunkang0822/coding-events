@@ -1,4 +1,4 @@
 # coding-events-demo
 SpringBoot demo pracatic
 
-starter - initial setup up
+starter - initial commit with static events list
