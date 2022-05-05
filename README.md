@@ -1,2 +1,4 @@
 # coding-events-demo
-SpringBoot demo pracatice
+SpringBoot demo pracatic
+
+starter - initial setup up
