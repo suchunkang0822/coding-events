@@ -1,0 +1,23 @@
+<!Doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+    <body>
+        <nav th:fragment="navigation">
+            <ul>
+                <li><a href="/events">All Events</a></li>
+                <li><a href="/events/create">Create Events</a></li>
+            </ul>
+        </nav>
+<!--        if you want the links inside the div tag not to work, than
+            you can add (th:remove = "tag") inside the div or replace div with th:block-->
+        <div th:fragment = "linkList">
+            <hr>
+            <a href = "https://www.launchcode.org">LaunchCode</a> <br/>
+            <a href = "https://www.lego.com">Play Well</a> <br/>
+            <a href = "https://www.webelements.com">Other Building Blocks</a>
+        </div>
+    </body>
+</html>
