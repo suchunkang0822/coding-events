@@ -1,8 +1,13 @@
 <!Doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
-<head>
+<head th:fragment="head">
     <meta charset="UTF-8"/>
-    <title></title>
+    <title>Coding Events</title>
+<!--    the value for below attributes need the slash,
+        it wouldn't matter for the home page but will not apply to
+        other relative paths-->
+    <script th:src="@{/script.js}"></script>
+    <link rel="stylesheet" th:href="@{/styles.css}">
 </head>
     <body>
         <nav th:fragment="navigation">
@@ -13,7 +18,7 @@
         </nav>
 <!--        if you want the links inside the div tag not to work, than
             you can add (th:remove = "tag") inside the div or replace div with th:block-->
-        <div th:fragment = "linkList">
+        <div th:fragment = "linkList" th:remove="all-but-first">
             <hr>
             <a href = "https://www.launchcode.org">LaunchCode</a> <br/>
             <a href = "https://www.lego.com">Play Well</a> <br/>
