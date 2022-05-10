@@ -10,4 +10,6 @@ add_bootstrap - Added bootsrap
 create_model - model created
 add_property - model properties added 
 add_id - id property added to the model Even
-create_data_layer - adds data layer for Event objectt
+create_data_layer - adds data layer for Event object
+delete_events - implemented ability to delete Event
+model_binding - added model binding

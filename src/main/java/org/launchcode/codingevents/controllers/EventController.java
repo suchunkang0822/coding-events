@@ -21,22 +21,51 @@ public class EventController {
 //        events.add("Strange Loop");
 //        events.add("Apple WWDC");
 //        events.add("SpringOne Platform");
+        model.addAttribute("title","All Events");
         model.addAttribute("events", EventData.getAll());
         return "events/index";
     }
 
     // lives at /event/create
     @GetMapping("create")
-    public String renderCreateEventForm(){
+    public String renderCreateEventForm(Model model){
+        model.addAttribute("title","Create Event");
         return "events/create";
     }
+
+    // When EventData class needs to add more fields. the
+    // controller below will need to add that many more arguments and
+    // it quickly will get unwieldy however model binding
+    // eliminates the need to do that and stream line everything
+    // @ModelAttribute will let Spring look into request data and look
+    // for fields of Event class
 
     // lives at /event/create
     // It is ok to have two handlers with same path b/c they handle two
     // different requests
     @PostMapping("create")
-    public String createEvent(@RequestParam String eventName,@RequestParam String eventDescription){
-        EventData.add(new Event(eventName,eventDescription));
+    public String createEvent(@ModelAttribute Event newEvent){
+//        EventData.add(new Event(eventName,eventDescription));
+        EventData.add(newEvent);
+        return "redirect:";
+    }
+
+    @GetMapping("delete")
+    public String displayDeleteEventForm(Model model){
+        model.addAttribute("title","Delete Events");
+        model.addAttribute("events",EventData.getAll());
+        return "events/delete";
+    }
+
+    // the required next to the @REquestParam is required here. If we don't, once the
+    // argument is empty it will error out
+    @PostMapping("delete")
+    public String processDeleteEvent(@RequestParam(required = false) int[] eventIds){
+        if(eventIds != null){
+            for(int i:eventIds){
+                EventData.remove(i);
+            }
+        }
         return "redirect:";
     }
 
