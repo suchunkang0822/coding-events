@@ -9,4 +9,5 @@ static_resources - Included static files such as JS and CSS
 add_bootstrap - Added bootsrap
 create_model - model created
 add_property - model properties added 
-add_id - id property added to the model Event
+add_id - id property added to the model Even
+create_data_layer - adds data layer for Event objectt
