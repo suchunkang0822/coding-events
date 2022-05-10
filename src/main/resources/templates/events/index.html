@@ -8,6 +8,7 @@
         <table class="table table-striped" >
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Name</th>
                     <th>Description</th>
                 </tr>
@@ -17,6 +18,7 @@
                     to reference the name since the name is a private field but it's written
                       as if it is just referencing directly for the sake brevity. This is called
                       syntactic sugar-->
+                <td th:text="${event.id}"></td>
                 <td th:text="${event.name}"></td>
                 <td th:text="${event.description}"></td>
             </tr>
