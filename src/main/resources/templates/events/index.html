@@ -12,9 +12,12 @@
                 </tr>
             </thead>
             <tr th:each="event : ${events}">
-                <td th:text="${event}"></td>
+<!--                Thymleaf actually implicitly calls getter for the name field
+                    to reference the name since the name is a private field but it's written
+                      as if it is just referencing directly for the sake brevity. This is called
+                      syntactic sugar-->
+                <td th:text="${event.name}"></td>
             </tr>
         </table>
-    <div th:replace="fragments::linkList"></div>
     </body>
 </html>
