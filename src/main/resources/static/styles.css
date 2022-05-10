@@ -1,4 +1,27 @@
-body{
-    font-size: 18px;
-    color: purple;
+h1{
+    text-align: center;
+}
+
+.nav{
+    text-align: center;
+    display: unset;
+}
+
+#createTitle{
+    text-align: center;
+}
+
+#textField{
+    text-align: center;
+}
+
+#button{
+    text-align: center;
+}
+
+img{
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 300px;
 }

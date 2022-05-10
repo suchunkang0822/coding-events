@@ -5,16 +5,35 @@
         <h1>All Events</h1>
         <nav th:replace="fragments :: navigation"></nav>
 <p th:unless="${events} and ${events.size()}">No events!</p>
-        <table class="table table-striped" >
+<!--        <a th:replace="fragments::url"></a>-->
+        <table class="table table-condensed" >
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Detail</th>
+                    <th>Link</th>
+                    <th>Photo</th>
                 </tr>
             </thead>
-            <tr th:each="event : ${events}">
-                <td th:text="${event}"></td>
-            </tr>
+            <th:block th:each="event,iter:${events}">
+                <tr>
+                    <td th:text="${iter.index}+'. '+${event.key}"></td>
+                    <td th:text="${event.value}"></td>
+                    <td><a th:href="'https://'+ ${url[event.key]}">The Link</a></td>
+                    <td><img th:src="@{'/images/'+${event.key}+'.png'}"/></td>
+                </tr>
+            </th:block>
+
+
+
+<!--            <ol>-->
+<!--                <th:block th:each="event:${events}">-->
+<!--                    <tr>-->
+<!--                        <td th:text="${event.key}"></td>-->
+<!--                        <td th:text="${event.value}"></td>-->
+<!--                    </tr>-->
+<!--                </th:block>-->
+<!--            </ol>-->
         </table>
-    <div th:replace="fragments::linkList"></div>
     </body>
 </html>
