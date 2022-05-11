@@ -13,3 +13,4 @@ add_id - id property added to the model Even
 create_data_layer - adds data layer for Event object
 delete_events - implemented ability to delete Event
 model_binding - added model binding
+edit_events - added edit handlers and necessary template
