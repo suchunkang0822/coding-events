@@ -35,8 +35,11 @@ public class EventController {
 
         // The reason why we pass an empty event obj below is because
         // by passing this empty Event obj, the template will render
-        // and know necessary fields related to the obj to wire up
-        // automatically when particular fields are called
+        // and know necessary fields related to the obj to bind
+        // automatically when particular fields are called.
+        // Lastly an argument for label is missing. In such case
+        // Spring will implicitly create all lower case "event"
+        // label for you
         model.addAttribute(new Event());
         return "events/create";
     }
