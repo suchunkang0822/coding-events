@@ -30,8 +30,14 @@ public class EventController {
 
     // lives at /event/create
     @GetMapping("create")
-    public String renderCreateEventForm(Model model){
+    public String displayCreateEventForm(Model model){
         model.addAttribute("title","Create Event");
+
+        // The reason why we pass an empty event obj below is because
+        // by passing this empty Event obj, the template will render
+        // and know necessary fields related to the obj to wire up
+        // automatically when particular fields are called
+        model.addAttribute(new Event());
         return "events/create";
     }
 
@@ -53,7 +59,14 @@ public class EventController {
                               Errors errors, Model model){
         if(errors.hasErrors()){
             model.addAttribute("title","Create Event");
-            model.addAttribute("errorMsg","Bad Data!");
+
+            // Now, because we had validation annotations with custom msgs
+            // we don't need to pass an errorMsg like below. Instead, we can
+            // render directly from the template using th:errors = "${fieldName}"
+            // As long as you have proper validation annotations inside the class
+            // plus passing the Errors obj in the method as above.
+
+//            model.addAttribute("errorMsg","Bad Data!");
             return "events/create";
         }
 //        EventData.add(new Event(eventName,eventDescription));
