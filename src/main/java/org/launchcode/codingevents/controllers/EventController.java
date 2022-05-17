@@ -4,8 +4,10 @@ import org.launchcode.codingevents.data.EventData;
 import org.launchcode.codingevents.models.Event;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +35,9 @@ public class EventController {
         return "events/create";
     }
 
+    // Adding @Valid annotation will check any validation annotations
+    // on the fields for this class and make sure they are satisfied
+
     // When EventData class needs to add more fields. the
     // controller below will need to add that many more arguments and
     // it quickly will get unwieldy however model binding
@@ -44,7 +49,13 @@ public class EventController {
     // It is ok to have two handlers with same path b/c they handle two
     // different requests
     @PostMapping("create")
-    public String createEvent(@ModelAttribute Event newEvent){
+    public String createEvent(@ModelAttribute @Valid Event newEvent,
+                              Errors errors, Model model){
+        if(errors.hasErrors()){
+            model.addAttribute("title","Create Event");
+            model.addAttribute("errorMsg","Bad Data!");
+            return "events/create";
+        }
 //        EventData.add(new Event(eventName,eventDescription));
         EventData.add(newEvent);
         return "redirect:";

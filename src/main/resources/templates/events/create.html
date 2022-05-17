@@ -3,6 +3,9 @@
 <head th:replace="fragments::head"></head>
 <body class="container">
     <nav th:replace="fragments :: header"></nav>
+
+    <p th:text="${errorMsg}" style="color: red"></p>
+
     <form method="post" action="create">
         <div class="form-group">
             <label>Name
