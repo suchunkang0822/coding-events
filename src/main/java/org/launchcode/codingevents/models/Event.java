@@ -25,6 +25,8 @@ public class Event {
     @Positive(message = "Attendees must be bigger than zero")
     private int attendees;
 
+    private EventType type;
+
     private int id;
     private static int nextId=1;
 
@@ -34,7 +36,7 @@ public class Event {
     }
 
     public Event(String name, String description, String contactEmail,
-                 String location, boolean isRegistered, int attendees) {
+                 String location, boolean isRegistered, int attendees, EventType type) {
         this();
         this.name = name;
         this.description = description;
@@ -42,6 +44,7 @@ public class Event {
         this.location = location;
         this.isRegistered = isRegistered;
         this.attendees = attendees;
+        this.type = type;
 
     }
 
@@ -93,8 +96,16 @@ public class Event {
         this.attendees = attendees;
     }
 
+    public EventType getType() {
+        return type;
+    }
+
+    public void setType(EventType type) {
+        this.type = type;
+    }
+
     public int getId() {
-        return id;
+        return id/2;
     }
 
     @Override

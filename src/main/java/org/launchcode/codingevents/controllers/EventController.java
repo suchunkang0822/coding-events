@@ -2,6 +2,7 @@ package org.launchcode.codingevents.controllers;
 
 import org.launchcode.codingevents.data.EventData;
 import org.launchcode.codingevents.models.Event;
+import org.launchcode.codingevents.models.EventType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -40,7 +41,13 @@ public class EventController {
         // Lastly an argument for label is missing. In such case
         // Spring will implicitly create all lower case "event"
         // label for you
+
+        // *** because we initialize and pass new event here
+        // the id number will always be in multiple of two
+        // so the .getId method from Event will return id/2
         model.addAttribute(new Event());
+
+        model.addAttribute("types", EventType.values());
         return "events/create";
     }
 
