@@ -1,5 +1,5 @@
 <!Doctype html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<html lang="en" xmlns:th="https://thymeleaf.org/">
 <head th:replace="fragments::head"></head>
 <body class="container">
     <nav th:replace="fragments :: header"></nav>
@@ -33,6 +33,24 @@
                 <input th:field="${event.contactEmail}" class="form-control">
             </label>
             <p class="error" th:errors="${event.contactEmail}"></p>
+        </div>
+        <div class="form-group">
+            <label>Location
+                <input th:field="${event.location}" class="form-control">
+            </label>
+            <p class="error" th:errors="${event.location}"></p>
+        </div>
+        <div class="form-group">
+            <label>Registration <br>
+                <input type="checkbox" th:field="${event.isRegistered}" th:value="true"> <label>Yes</label>
+            </label>
+            <p class="error" th:errors="${event.isRegistered}"></p>
+        </div>
+        <div class="form-group">
+            <label>Number of Attendees
+                <input th:field="${event.attendees}" class="form-control">
+            </label>
+            <p class="error" th:errors="${event.attendees}"></p>
         </div>
         <div class="form-group">
             <input type="submit" value="Create Event" class="btn btn-success">
