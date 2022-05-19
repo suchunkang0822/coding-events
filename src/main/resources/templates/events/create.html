@@ -42,7 +42,8 @@
         </div>
         <div class="form-group">
             <label>Registration <br>
-                <input type="checkbox" th:field="${event.isRegistered}" th:value="true"> <label>Yes</label>
+                <input type="radio" th:field="${event.isRegistered}" th:value="true"> <label>Yes</label>
+                <input type="radio" th:field="${event.isRegistered}" th:value="false"> <label>No</label>
             </label>
             <p class="error" th:errors="${event.isRegistered}"></p>
         </div>
