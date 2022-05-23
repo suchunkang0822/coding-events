@@ -124,7 +124,7 @@ public class Event {
     }
 
     public int getId() {
-        return id/2;
+        return id;
     }
 
     @Override

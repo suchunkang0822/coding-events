@@ -1,8 +1,10 @@
 package org.launchcode.codingevents.controllers;
 
 import org.launchcode.codingevents.data.EventData;
+import org.launchcode.codingevents.data.EventRepository;
 import org.launchcode.codingevents.models.Event;
 import org.launchcode.codingevents.models.EventType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -16,6 +18,13 @@ import java.util.List;
 @RequestMapping("events")
 public class EventController {
 
+    // Telling Spring that it should auto populate
+    // eventRepository, which does not have constructor,getters, and setters
+    // It's using the dependency injection(inversion of control)
+    // Asks SpringBoot to
+    @Autowired
+    private EventRepository eventRepository;
+
 
     @GetMapping
     public String displayAllEvents(Model model){
@@ -25,7 +34,13 @@ public class EventController {
 //        events.add("Apple WWDC");
 //        events.add("SpringOne Platform");
         model.addAttribute("title","All Events");
-        model.addAttribute("events", EventData.getAll());
+
+        // We no longer need EvenData, data layer, since we are
+        // using DB to keep track of the Even obj
+//        model.addAttribute("events", EventData.getAll());
+
+        // returns collection of events from DB
+        model.addAttribute("events", eventRepository.findAll());
         return "events/index";
     }
 
@@ -80,14 +95,23 @@ public class EventController {
             return "events/create";
         }
 //        EventData.add(new Event(eventName,eventDescription));
-        EventData.add(newEvent);
+
+        // We are no longer using EventData, data layer
+//        EventData.add(newEvent);
+
+        //newEvent now saved at DB instead of memory collection
+        eventRepository.save(newEvent);
         return "redirect:";
     }
 
     @GetMapping("delete")
     public String displayDeleteEventForm(Model model){
         model.addAttribute("title","Delete Events");
-        model.addAttribute("events",EventData.getAll());
+
+        // No loner using the data layer, EventData
+//        model.addAttribute("events",EventData.getAll());
+
+        model.addAttribute("events",eventRepository.findAll());
         return "events/delete";
     }
 
@@ -97,7 +121,10 @@ public class EventController {
     public String processDeleteEvent(@RequestParam(required = false) int[] eventIds){
         if(eventIds != null){
             for(int i:eventIds){
-                EventData.remove(i);
+
+//                EventData.remove(i);
+                // this is the equivalent of remove from DB
+                eventRepository.deleteById(i);
             }
         }
         return "redirect:";
