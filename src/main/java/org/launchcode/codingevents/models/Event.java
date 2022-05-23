@@ -1,9 +1,27 @@
 package org.launchcode.codingevents.models;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.*;
 import java.util.Objects;
 
+// Flagging Spring that this is persistent obj
+// that can be stored outside of this application in a DB.
+// This is the bare minimum we need to make this class persistent
+@Entity
 public class Event {
+    // Telling that this is our primary key
+    @Id
+    // We want DB to generate the primary key
+    @GeneratedValue
+    private int id;
+
+    // Now we don't need to manually generate the id
+    // since DB will take care of that for use from
+    // the annotation above
+//    private static int nextId=1;
+
     @NotBlank(message = "Name is required")
     @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters.")
     private String name;
@@ -27,17 +45,18 @@ public class Event {
 
     private EventType type;
 
-    private int id;
-    private static int nextId=1;
-
+    // We ALWAYS NEED EMPTY CONSTRUCTOR FOR THE
+    // PERSISTENT CLASS!!!!! JPA uses it to
+    // instantiate an obj
     public Event(){
-        this.id = nextId;
-        nextId++;
+//        this.id = nextId;
+//        nextId++;
     }
 
     public Event(String name, String description, String contactEmail,
                  String location, boolean isRegistered, int attendees, EventType type) {
-        this();
+        // Not needed
+        //this();
         this.name = name;
         this.description = description;
         this.contactEmail = contactEmail;
