@@ -3,6 +3,7 @@ package org.launchcode.codingevents.models;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.*;
 import java.util.Objects;
 
@@ -44,7 +45,18 @@ public class Event extends AbstractEntity{
     @Positive(message = "Attendees must be bigger than zero")
     private int attendees;
 
-    private EventType type;
+    // we'll use EventCategory entity to
+    // create many-to-one relational DB
+    // Many Events to one EventCategory.
+    // Hence we'll no longer need enum along
+    // with the below
+//    private EventType type;
+
+    // below annotation maps many Events to one EventCategory
+    // relational DB
+    @ManyToOne
+    @NotNull(message = "Category is required")
+    private EventCategory eventCategory;
 
     // We ALWAYS NEED EMPTY CONSTRUCTOR FOR THE
     // PERSISTENT CLASS!!!!! JPA uses it to
@@ -55,7 +67,9 @@ public class Event extends AbstractEntity{
     }
 
     public Event(String name, String description, String contactEmail,
-                 String location, boolean isRegistered, int attendees, EventType type) {
+                 String location, boolean isRegistered, int attendees,
+//                 EventType type
+                    EventCategory eventCategory) {
         // Not needed
         //this();
         this.name = name;
@@ -64,7 +78,7 @@ public class Event extends AbstractEntity{
         this.location = location;
         this.isRegistered = isRegistered;
         this.attendees = attendees;
-        this.type = type;
+        this.eventCategory = eventCategory;
 
     }
 
@@ -116,13 +130,22 @@ public class Event extends AbstractEntity{
         this.attendees = attendees;
     }
 
-    public EventType getType() {
-        return type;
+    public EventCategory getEventCategory() {
+        return eventCategory;
     }
 
-    public void setType(EventType type) {
-        this.type = type;
+    public void setEventCategory(EventCategory eventCategory) {
+        this.eventCategory = eventCategory;
     }
+
+    //    public EventType getType() {
+//        return type;
+//    }
+//    public void setType(EventType type) {
+//        this.type = type;
+//    }
+
+
 
 //    public int getId() {
 //        return id;

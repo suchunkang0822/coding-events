@@ -2,9 +2,10 @@ package org.launchcode.codingevents.controllers;
 
 // EventData is not needed since we are using DB
 //import org.launchcode.codingevents.data.EventData;
+import org.launchcode.codingevents.data.EventCategoryRepository;
 import org.launchcode.codingevents.data.EventRepository;
 import org.launchcode.codingevents.models.Event;
-import org.launchcode.codingevents.models.EventType;
+//import org.launchcode.codingevents.models.EventType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +26,9 @@ public class EventController {
     // Asks SpringBoot to
     @Autowired
     private EventRepository eventRepository;
+
+    @Autowired
+    private EventCategoryRepository eventCategoryRepository;
 
 
     @GetMapping
@@ -63,10 +67,14 @@ public class EventController {
         // so the .getId method from Event will return id/2
         model.addAttribute(new Event());
 
-        // You have to pass the select options again
-        // if not, the redirect will not render options at all
-        // when validation error occurs. 
-        model.addAttribute("types", EventType.values());
+
+//        model.addAttribute("types", EventType.values());
+
+        // Now we'll be using EventCategoryRepository so
+        // no need to pass the EventType.values() above, infact EventData is no longer needed
+        model.addAttribute("categories", eventCategoryRepository.findAll());
+
+
         return "events/create";
     }
 
@@ -97,8 +105,13 @@ public class EventController {
 
 //            model.addAttribute("errorMsg","Bad Data!");
 
+//            // You have to pass the select options again
+//            // if not, the redirect will not render options at all
+//            // when validation error occurs.
+//            model.addAttribute("types", EventType.values());
 
-            model.addAttribute("types", EventType.values());
+            // no need for above command
+            model.addAttribute("categories", eventCategoryRepository.findAll());
             return "events/create";
         }
 //        EventData.add(new Event(eventName,eventDescription));

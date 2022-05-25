@@ -16,9 +16,7 @@ public class EventCategory extends AbstractEntity{
     @NotBlank(message = "Event Category Name is required")
     private String name;
 
-    public EventCategory(@Size(min=3, message="Name must be at least 3 characters long")
-                         @NotBlank(message = "Event Category Name is required")
-                                 String name){
+    public EventCategory(String name){
         this.name = name;
     }
 
