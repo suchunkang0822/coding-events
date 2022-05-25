@@ -6,6 +6,7 @@ import org.launchcode.codingevents.data.EventCategoryRepository;
 import org.launchcode.codingevents.data.EventRepository;
 import org.launchcode.codingevents.models.Event;
 //import org.launchcode.codingevents.models.EventType;
+import org.launchcode.codingevents.models.EventCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("events")
@@ -30,22 +32,46 @@ public class EventController {
     @Autowired
     private EventCategoryRepository eventCategoryRepository;
 
-
+//    @RequestParam
+//    // If we want to use @GetMapping to receive categoryId, change the categoryId annotation to
+//    // @PathVariable and data type from Integer to String, since pathVariable
+//    // will come in String then use Integer.parseInt(categoryId) to convert back to int.
+//    // The two values inside annotation are two to make the controller to respond
+//    // with or without the pathVariable.
+//    @GetMapping(value = {"","{categoryId}"})
     @GetMapping
-    public String displayAllEvents(Model model){
-//        List<String> events = new ArrayList<>();
+    public String displayAllEvents(@RequestParam(required = false) Integer categoryId,
+                                   Model model){
+        if(categoryId == null){
+            //List<String> events = new ArrayList<>();
 //        events.add("Code With Pride");
 //        events.add("Strange Loop");
 //        events.add("Apple WWDC");
 //        events.add("SpringOne Platform");
-        model.addAttribute("title","All Events");
+            model.addAttribute("title","All Events");
 
-        // We no longer need EvenData, data layer, since we are
-        // using DB to keep track of the Even obj
+//        // We no longer need EvenData, data layer, since we are
+//        // using DB to keep track of the Even obj
 //        model.addAttribute("events", EventData.getAll());
+            // returns collection of events from DB
+            model.addAttribute("events", eventRepository.findAll());
+        }else{
+            // This is an optional obj used when you want
+            // to access the CRUD repository but you never
+            // know if it'll be null or contain a value.
+            // We never know if there will be event category or not.
+            // However, this isn't the value itself. Hence, use
+            // .get() method on it.
+            Optional<EventCategory> result = eventCategoryRepository.findById(categoryId);
+            if (result.isEmpty()){
+                model.addAttribute("title","Invalid Category ID: "+categoryId);
+            }else{
+                EventCategory category = result.get();
+                model.addAttribute("title","Event Category: "+category.getName());
+                model.addAttribute("events",category.getEvents());
+            }
+        }
 
-        // returns collection of events from DB
-        model.addAttribute("events", eventRepository.findAll());
         return "events/index";
     }
 
