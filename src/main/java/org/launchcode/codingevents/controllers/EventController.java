@@ -63,6 +63,9 @@ public class EventController {
         // so the .getId method from Event will return id/2
         model.addAttribute(new Event());
 
+        // You have to pass the select options again
+        // if not, the redirect will not render options at all
+        // when validation error occurs. 
         model.addAttribute("types", EventType.values());
         return "events/create";
     }
