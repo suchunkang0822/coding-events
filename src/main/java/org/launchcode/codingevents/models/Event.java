@@ -10,12 +10,13 @@ import java.util.Objects;
 // that can be stored outside of this application in a DB.
 // This is the bare minimum we need to make this class persistent
 @Entity
-public class Event {
-    // Telling that this is our primary key
-    @Id
-    // We want DB to generate the primary key
-    @GeneratedValue
-    private int id;
+public class Event extends AbstractEntity{
+    // You
+//    // Telling that this is our primary key
+//    @Id
+//    // We want DB to generate the primary key
+//    @GeneratedValue
+//    private int id;
 
     // Now we don't need to manually generate the id
     // since DB will take care of that for use from
@@ -123,25 +124,25 @@ public class Event {
         this.type = type;
     }
 
-    public int getId() {
-        return id;
-    }
+//    public int getId() {
+//        return id;
+//    }
 
     @Override
     public String toString() {
         return name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Event event = (Event) o;
-        return id == event.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Event event = (Event) o;
+//        return id == event.id;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(id);
+//    }
 }

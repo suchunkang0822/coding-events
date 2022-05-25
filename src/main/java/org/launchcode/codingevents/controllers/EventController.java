@@ -1,6 +1,7 @@
 package org.launchcode.codingevents.controllers;
 
-import org.launchcode.codingevents.data.EventData;
+// EventData is not needed since we are using DB
+//import org.launchcode.codingevents.data.EventData;
 import org.launchcode.codingevents.data.EventRepository;
 import org.launchcode.codingevents.models.Event;
 import org.launchcode.codingevents.models.EventType;
@@ -92,6 +93,9 @@ public class EventController {
             // plus passing the Errors obj in the method as above.
 
 //            model.addAttribute("errorMsg","Bad Data!");
+
+
+            model.addAttribute("types", EventType.values());
             return "events/create";
         }
 //        EventData.add(new Event(eventName,eventDescription));
