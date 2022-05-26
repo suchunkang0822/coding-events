@@ -1,9 +1,7 @@
 package org.launchcode.codingevents.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.Objects;
 
@@ -28,22 +26,26 @@ public class Event extends AbstractEntity{
     @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters.")
     private String name;
 
-    @Size(max = 500, message = "Description is too long.")
-    private String description;
+    // Encapsulating Event details, hence below fields
+    // are now in EventDetail entity. These will be
+    // replaced by eventDetail
+//    @Size(max = 500, message = "Description is too long.")
+//    private String description;
+//
+//    @NotBlank(message = "Email is required")
+//    @Email(message = "Invalid email. Try again.")
+//    private String contactEmail;
+//
+//    @NotBlank(message = "Location is required")
+//    @NotNull(message = "Location can't be Null")
+//    private String location;
+//
+//    @AssertTrue(message = "Registration is required for attendee")
+//    private boolean isRegistered;
+//
+//    @Positive(message = "Attendees must be bigger than zero")
+//    private int attendees;
 
-    @NotBlank(message = "Email is required")
-    @Email(message = "Invalid email. Try again.")
-    private String contactEmail;
-
-    @NotBlank(message = "Location is required")
-    @NotNull(message = "Location can't be Null")
-    private String location;
-
-    @AssertTrue(message = "Registration is required for attendee")
-    private boolean isRegistered;
-
-    @Positive(message = "Attendees must be bigger than zero")
-    private int attendees;
 
     // we'll use EventCategory entity to
     // create many-to-one relational DB
@@ -51,6 +53,31 @@ public class Event extends AbstractEntity{
     // Hence we'll no longer need enum along
     // with the below
 //    private EventType type;
+
+    // This cascade asks when Event is saved, also
+    // save EventDetails as well. It's same as
+    // making EventDetailsRepository and doing .save()
+    // in the createEvent controller. But of course, this is quicker.
+    // CascadeType.All, means that whatever operations that is done
+    // cascade it down to eventDetail. so if you delete an Event,
+    // it will be applied to eventDetail as well.
+    @OneToOne(cascade = CascadeType.ALL )
+    // The reason why we add @Valid is that when we wnat to
+    // validate our new Event obj in the controller when
+    // there are model binding and form submission going on,
+    //  when we add @Valid to that event(in the EventController) it WON'T validate
+    // obj contained within the Event, it'll only validate
+    // top level fields such as 'name' above.
+    // By having this @Valid here, it will check the fields
+    // of the eventDetails inside such as the description,email,etc .
+    @Valid
+    // Checks if there was an en EventDetails obj
+    // but it would not go into check the fields inside.
+    // so you need the @valid above
+    @NotNull
+    // We are not using constructor and will rely on
+    // setter and model binding to populate eventDetails.
+    private EventDetails eventDetails;
 
     // below annotation maps many Events to one EventCategory
     // relational DB
@@ -66,18 +93,22 @@ public class Event extends AbstractEntity{
 //        nextId++;
     }
 
-    public Event(String name, String description, String contactEmail,
-                 String location, boolean isRegistered, int attendees,
-//                 EventType type
+    public Event(String name,
+//                 String description,
+//                 String contactEmail,
+//                 String location,
+//                 boolean isRegistered,
+//                 int attendees,
+//                 EventType type,
                     EventCategory eventCategory) {
         // Not needed
         //this();
         this.name = name;
-        this.description = description;
-        this.contactEmail = contactEmail;
-        this.location = location;
-        this.isRegistered = isRegistered;
-        this.attendees = attendees;
+//        this.description = description;
+//        this.contactEmail = contactEmail;
+//        this.location = location;
+//        this.isRegistered = isRegistered;
+//        this.attendees = attendees;
         this.eventCategory = eventCategory;
 
     }
@@ -90,44 +121,53 @@ public class Event extends AbstractEntity{
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+//    public String getDescription() {
+//        return description;
+//    }
+//
+//    public void setDescription(String description) {
+//        this.description = description;
+//    }
+//
+//    public String getContactEmail() {
+//        return contactEmail;
+//    }
+//
+//    public void setContactEmail(String contactEmail) {
+//        this.contactEmail = contactEmail;
+//    }
+//
+//    public String getLocation() {
+//        return location;
+//    }
+//
+//    public void setLocation(String location) {
+//        this.location = location;
+//    }
+//
+//    public boolean getIsRegistered() {
+//        return isRegistered;
+//    }
+//
+//    public void setIsRegistered(boolean isRegistered) {
+//        this.isRegistered = isRegistered;
+//    }
+//
+//    public int getAttendees() {
+//        return attendees;
+//    }
+//
+//    public void setAttendees(int attendees) {
+//        this.attendees = attendees;
+//    }
+
+
+    public EventDetails getEventDetails() {
+        return eventDetails;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getContactEmail() {
-        return contactEmail;
-    }
-
-    public void setContactEmail(String contactEmail) {
-        this.contactEmail = contactEmail;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public boolean getIsRegistered() {
-        return isRegistered;
-    }
-
-    public void setIsRegistered(boolean isRegistered) {
-        this.isRegistered = isRegistered;
-    }
-
-    public int getAttendees() {
-        return attendees;
-    }
-
-    public void setAttendees(int attendees) {
-        this.attendees = attendees;
+    public void setEventDetails(EventDetails eventDetails) {
+        this.eventDetails = eventDetails;
     }
 
     public EventCategory getEventCategory() {

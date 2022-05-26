@@ -23,35 +23,46 @@
         <div class="form-group">
             <label>Description
 <!--                <input type="text" name="description" class="form-control">-->
-                <input th:field="${event.description}" class="form-control">
+<!--                <input th:field="${event.description}" class="form-control">-->
+                <input th:field="${event.eventDetails.description}" class="form-control">
             </label>
-            <p class="error" th:errors="${event.description}"></p>
+<!--            <p class="error" th:errors="${event.description}"></p>-->
+            <p class="error" th:errors="${event.eventDetails.description}"></p>
         </div>
         <div class="form-group">
             <label>Contact Email
 <!--                <input type="text" name="contactEmail" class="form-control">-->
-                <input th:field="${event.contactEmail}" class="form-control">
+<!--                <input th:field="${event.contactEmail}" class="form-control">-->
+                <input th:field="${event.eventDetails.contactEmail}" class="form-control">
             </label>
-            <p class="error" th:errors="${event.contactEmail}"></p>
+<!--            <p class="error" th:errors="${event.contactEmail}"></p>-->
+            <p class="error" th:errors="${event.eventDetails.contactEmail}"></p>
         </div>
         <div class="form-group">
             <label>Location
-                <input th:field="${event.location}" class="form-control">
+<!--                <input th:field="${event.location}" class="form-control">-->
+                <input th:field="${event.eventDetails.location}" class="form-control">
             </label>
-            <p class="error" th:errors="${event.location}"></p>
+<!--            <p class="error" th:errors="${event.location}"></p>-->
+            <p class="error" th:errors="${event.eventDetails.location}"></p>
         </div>
         <div class="form-group">
             <label>Registration <br>
-                <input type="radio" th:field="${event.isRegistered}" th:value="true"> <label>Yes</label>
-                <input type="radio" th:field="${event.isRegistered}" th:value="false"> <label>No</label>
+<!--                <input type="radio" th:field="${event.isRegistered}" th:value="true"> <label>Yes</label>-->
+<!--                <input type="radio" th:field="${event.isRegistered}" th:value="false"> <label>No</label>-->
+                <input type="radio" th:field="${event.eventDetails.isRegistered}" th:value="true"> <label>Yes</label>
+                <input type="radio" th:field="${event.eventDetails.isRegistered}" th:value="false"> <label>No</label>
             </label>
-            <p class="error" th:errors="${event.isRegistered}"></p>
+<!--            <p class="error" th:errors="${event.isRegistered}"></p>-->
+            <p class="error" th:errors="${event.eventDetails.isRegistered}"></p>
         </div>
         <div class="form-group">
             <label>Number of Attendees
-                <input th:field="${event.attendees}" class="form-control">
+<!--                <input th:field="${event.attendees}" class="form-control">-->
+                <input th:field="${event.eventDetails.attendees}" class="form-control">
             </label>
-            <p class="error" th:errors="${event.attendees}"></p>
+<!--            <p class="error" th:errors="${event.attendees}"></p>-->
+            <p class="error" th:errors="${event.eventDetails.attendees}"></p>
         </div>
         <div>
             <label>Type
