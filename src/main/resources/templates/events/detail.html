@@ -1,0 +1,34 @@
+<!Doctype html>
+<html lang="en" xmlns:th="https://thymeleaf.org/">
+<head th:replace="fragments::head"></head>
+<body class="container">
+    <nav th:replace="fragments :: header"></nav>
+    <table class="table table-striped" >
+        <thead>
+        <tr>
+            <th>ID</th>
+            <td th:text="${event.id}"></td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td th:text="${event.eventDetails.description}"></td>
+        </tr>
+        <tr>
+            <th>Contact Email</th>
+            <td th:text="${event.eventDetails.contactEmail}"></td>
+        </tr>
+        <tr>
+            <th>Location</th>
+            <td th:text ="${event.eventDetails.location}"></td>
+        </tr>
+        <tr>
+            <th>Registration</th>
+            <td th:text ="${event.eventDetails.isRegistered}? 'Yes': 'No'"></td>
+        </tr>
+        <tr>
+            <th>Number of Attendees</th>
+            <td th:text = "${event.eventDetails.attendees}"></td>
+        </tr>
+    </table>
+</body>
+</html>

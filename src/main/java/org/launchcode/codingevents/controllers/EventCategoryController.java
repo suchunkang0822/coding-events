@@ -43,7 +43,8 @@ public class EventCategoryController {
             model.addAttribute("title","Create Category");
             //The instruction is to pass the obj below.
             //but it will not print the error msgs.
-//            model.addAttribute(new EventCategory());
+            //model.addAttribute(new EventCategory());
+            model.addAttribute(eventCategory);
             return "eventCategories/create";
         }
         eventCategoryRepository.save(eventCategory);
