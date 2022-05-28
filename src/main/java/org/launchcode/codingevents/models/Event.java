@@ -3,6 +3,8 @@ package org.launchcode.codingevents.models;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 // Flagging Spring that this is persistent obj
@@ -84,6 +86,10 @@ public class Event extends AbstractEntity{
     @ManyToOne
     @NotNull(message = "Category is required")
     private EventCategory eventCategory;
+
+
+    @ManyToMany
+    private final List<Tag> tags = new ArrayList<>();
 
     // We ALWAYS NEED EMPTY CONSTRUCTOR FOR THE
     // PERSISTENT CLASS!!!!! JPA uses it to
@@ -190,6 +196,15 @@ public class Event extends AbstractEntity{
 //    public int getId() {
 //        return id;
 //    }
+
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void addTag(Tag tag){
+        this.tags.add(tag);
+    }
 
     @Override
     public String toString() {
