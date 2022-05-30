@@ -29,6 +29,14 @@
             <th>Number of Attendees</th>
             <td th:text = "${event.eventDetails.attendees}"></td>
         </tr>
+        <tr>
+            <th>Tags</th>
+            <td>
+                <!--tags can be replaced with event.getTags()-->
+                <span th:each="tag:${tags}" th:text="${tag.displayName} + ' '"></span>
+            </td>
+        </tr>
     </table>
+    <a th:href="'/events/add-tag/?eventId='+${event.id}">Add Tag</a>
 </body>
 </html>

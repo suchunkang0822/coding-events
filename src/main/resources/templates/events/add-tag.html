@@ -1,0 +1,25 @@
+<!Doctype html>
+<html lang="en" xmlns:th="https://thymeleaf.org/">
+<head th:replace="fragments::head"></head>
+<body class="container">
+    <nav th:replace="fragments :: header"></nav>
+    <form method="post">
+        <div class="form-group">
+            <!-- The value field of below element will be set by the virtue of
+            us putting the th:field. Even though we specified the th:value, it will
+             be overwritten. Currently eventTag.event is empty wo we have to go back to
+              the controller, instead of passing event directly, we have to set the event field
+              of the (EventTagDTO)eventTag-->
+<!--            <input type="hidden" th:field="${eventTag.event}" th:value="${event.id}">-->
+            <input type="hidden" th:field="${eventTag.event}">
+            <select th:field="${eventTag.tag}">
+                <option th:each="tag:${tags}"
+                        th:text="${tag.name}"
+                        th:value="${tag.id}"
+                ></option>
+            </select>
+        </div>
+        <input type="submit" class="btn btn-success" value="Add Tag">
+    </form>
+</body>
+</html>

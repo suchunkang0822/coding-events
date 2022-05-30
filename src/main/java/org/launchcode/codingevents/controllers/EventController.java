@@ -4,15 +4,19 @@ package org.launchcode.codingevents.controllers;
 //import org.launchcode.codingevents.data.EventData;
 import org.launchcode.codingevents.data.EventCategoryRepository;
 import org.launchcode.codingevents.data.EventRepository;
+import org.launchcode.codingevents.data.TagRepository;
 import org.launchcode.codingevents.models.Event;
 //import org.launchcode.codingevents.models.EventType;
 import org.launchcode.codingevents.models.EventCategory;
+import org.launchcode.codingevents.models.Tag;
+import org.launchcode.codingevents.models.dto.EventTagDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +35,9 @@ public class EventController {
 
     @Autowired
     private EventCategoryRepository eventCategoryRepository;
+
+    @Autowired
+    private TagRepository tagRepository;
 
 //    @RequestParam
 //    // If we want to use @GetMapping to receive categoryId, change the categoryId annotation to
@@ -185,8 +192,57 @@ public class EventController {
             Event event = result.get();
             model.addAttribute("title",event.getName() + " Details");
             model.addAttribute("event",event);
+            model.addAttribute("tags",event.getTags());
         }
         return "events/detail";
+    }
+
+    @GetMapping("add-tag")
+    public String displayAddTagForm(@RequestParam Integer eventId, Model model){
+        Optional<Event> result = eventRepository.findById(eventId);
+        if(result.isEmpty()){
+            model.addAttribute("title","Event ID does not exist");
+            return "events/index";
+        }else{
+            Event event = result.get();
+            model.addAttribute("title","Add Tag to: "+event.getName());
+            model.addAttribute("tags",tagRepository.findAll());
+
+
+//        model.addAttribute("event",event);
+
+            // Passing event plainly as above will not bind to
+            // the event inside the eventTag wrapper
+            EventTagDTO eventTag = new EventTagDTO();
+            eventTag.setEvent(event);
+
+//        // The benefit of using DTO is that we are going to use
+//        // model binding with this DTO. This will allow us to, instead
+//        // of trying to figure out how to pass bunch of data around,
+//        // the data associated with the tag in an event we want to bind together
+//        // we are going to be able to pass single obj that can be validated,
+//        // which will be instance of EventTagDTO.
+//        model.addAttribute("eventTag",new EventTagDTO());
+
+            model.addAttribute("eventTag",eventTag);
+            return "events/add-tag";
+        }
+    }
+
+    @PostMapping("add-tag")
+    public String processAddTagForm(@ModelAttribute @Valid EventTagDTO eventTag,
+                                    Errors errors,
+                                    Model model){
+        if(!errors.hasErrors()){
+            Event event = eventTag.getEvent();
+            Tag tag = eventTag.getTag();
+            if(!event.getTags().contains(tag)){
+                event.addTag(tag);
+                eventRepository.save(event);
+            }
+            return "redirect:/events/detail/?eventId=" + event.getId();
+        }
+        return "redirect:/events/add-tag";
     }
 
 
